@@ -30,9 +30,9 @@
 					  "end:<input class='input2' placeholder='heure format 12:15'>"+
 					  "duree:<input class='stotal' disabled><\/div>");
       		        update_totalh();
-      		        $(".a" + myid + " input").keyup(function() {
-
-      		            if ($(this).val().length == 2) {
+      		        $(".a" + myid + " input").keyup(function(e) {
+			    var code = e.which;
+      		            if ($(this).val().length == 2  && code!=8) {
       		                $(this).val($(this).val() + ":");
       		            }
 
