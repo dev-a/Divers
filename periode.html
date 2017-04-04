@@ -16,105 +16,85 @@
 	           color: #fff;
 	       }
 	       .section {
+		   border-bottom:4px solid #fff;
 	           background: #FFBF00;
 	           color: #fff;
 	       }
 	</style>
 	<script>
-      var myid =0;
-	       $(document).ready(function() {	           
-	           $("#ajouter").click(function() {
-	               $("#zone").append("<div class='section a"+myid+"'>start:<input class='input1'>end:<input class='input2'>duree:<input class='stotal' disabled><\/div>");
-	               update_totalh(); 
-	               $(".a"+myid+ " input").keyup(function(){
-			                            
-                     if($(this).val().length==2)
-                       {
-                         $(this).val($(this).val()+":");
-                       }
-               
-                       if($(this).val().length==5 && $(this).attr('class')=="input1" )
-                       {
-             $(this).next('.input2').focus();
-                       }
-			       
-			       
-                       update_stotal(); 
-                    });
-                   
-                   myid++; 
-	           });
-             
-	update_totalh();
-	       });
-      
-      
-      	     function update_stotal()
-	     {
-	       console.log(";)");
-	       $( ".section" ).each(function( index ) {
-	       $(".stotal" , this).val(difference($(".input1" , this).val(),$(".input2" , this).val()));  
-	     });    
-           
-           
-           update_totalh();
-	     }
-	     
-      
-      
-	     function update_totalh()
-	     {
-           console.log("-th-");
-	       var retour=0;
-	       if($(".stotal").length!=0)
-	         {
-	                 var retour=$(".stotal").length;
-	           
-               var input1 ="00:00";
-               $( ".stotal" ).each(function( index ) {
-	      input1 = addtime(input1,$(this).val()) ; 
-	     });    
-           
-               retour =input1;
-	         }
-	       
-	       $('#total').html(retour)
-	     }
-	     
-	    function addtime(input1,input2)
-	     
-	   // function addtime()
-        {
-        //  var input1="01:30";
-          //var input2="00:45";
+      		var myid = 0;
+      		$(document).ready(function() {
+      		    $("#ajouter").click(function() {
+      		        $("#zone").append("<div class='section a" + myid + "'>start:<input class='input1'>end:<input class='input2'>duree:<input class='stotal' disabled><\/div>");
+      		        update_totalh();
+      		        $(".a" + myid + " input").keyup(function() {
 
-var time_2 = moment.duration(input1, "HH:mm");
-    var time_3 = moment.duration(input2, "HH:mm");
-    var final = time_2.add(time_3, "HH:mm");
+      		            if ($(this).val().length == 2) {
+      		                $(this).val($(this).val() + ":");
+      		            }
+
+      		            if ($(this).val().length == 5 && $(this).attr('class') == "input1") {
+      		                $(this).next('.input2').focus();
+      		            }
 
 
-	var hours = parseInt(final.asHours());
-	var minutes = parseInt(final.asMinutes())-hours*60;
-	return_string=(hours<10?"0"+hours:hours)+":"+(minutes<10?"0"+minutes:minutes)
-	  
-	return(return_string);
+      		            update_stotal();
+      		        });
 
-        }
-	     
+      		        myid++;
+      		    });
 
-	     function difference(input1,input2)
-	     {
-	       var startTime=moment(input1, "HH:mm");
-	var endTime=moment(input2, "HH:mm");
-	var duration = moment.duration(endTime.diff(startTime));
-	var hours = parseInt(duration.asHours());
-	var minutes = parseInt(duration.asMinutes())-hours*60;
-	return_string=(hours<10?"0"+hours:hours)+":"+(minutes<10?"0"+minutes:minutes)
-	//$('#debug').html(hours+":"+minutes );     
-	// $('#debug').html(return_string );  
-	console.log("--"+return_string);
-	return return_string;
-	     }
+      		    update_totalh();
+      		});
+
+
+      		function update_stotal() {
+      		    $(".section").each(function(index) {
+      		        $(".stotal", this).val(difference($(".input1", this).val(), $(".input2", this).val()));
+      		    });
+              
+      		    update_totalh();
+      		}
+
+
+
+      		function update_totalh() {
+      		    var retour = 0;
+      		    if ($(".stotal").length != 0) {
+      		        var retour = $(".stotal").length;
+      		        var input1 = "00:00";
+      		        $(".stotal").each(function(index) {
+      		            input1 = addtime(input1, $(this).val());
+      		        });
+      		        retour = input1;
+      		    }
+
+      		    $('#total').html(retour);
+      		}
+
+      		function addtime(input1, input2)
+      		{
+      		    var time_2 = moment.duration(input1, "HH:mm");
+      		    var time_3 = moment.duration(input2, "HH:mm");
+      		    var final = time_2.add(time_3, "HH:mm");
+      		    var hours = parseInt(final.asHours());
+      		    var minutes = parseInt(final.asMinutes()) - hours * 60;
+      		    return_string = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes);
+              
+      		    return (return_string);
+      		}
+
+
+      		function difference(input1, input2) {
+      		    var startTime = moment(input1, "HH:mm");
+      		    var endTime = moment(input2, "HH:mm");
+      		    var duration = moment.duration(endTime.diff(startTime));
+      		    var hours = parseInt(duration.asHours());
+      		    var minutes = parseInt(duration.asMinutes()) - hours * 60;
+      		    return_string = (hours < 10 ? "0" + hours : hours) + ":" + (minutes < 10 ? "0" + minutes : minutes);
+              
+      		    return return_string;
+      		}
 	</script>
 </head>
 <body>
@@ -125,6 +105,5 @@ var time_2 = moment.duration(input1, "HH:mm");
 	<div class="result">
 		total: <span id='total'></span>
 	</div>
-	<div id='debug'></div>
 </body>
 </html>
