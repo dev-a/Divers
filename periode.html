@@ -25,10 +25,10 @@
       		var myid = 0;
       		$(document).ready(function() {
       		    $("#ajouter").click(function() {
-      		        $("#zone").append("<div class='section a" + myid + "'>
-					  start:<input class='input1' placeholder='heure format 09:09'>
-					  end:<input class='input2' placeholder='heure format 12:15'>
-					  duree:<input class='stotal' disabled><\/div>");
+      		        $("#zone").append("<div class='section a" + myid + "'>"+
+					  "start:<input class='input1' placeholder='heure format 09:09'>"+
+					  "end:<input class='input2' placeholder='heure format 12:15'>"+
+					  "duree:<input class='stotal' disabled><\/div>");
       		        update_totalh();
       		        $(".a" + myid + " input").keyup(function() {
 
