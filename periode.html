@@ -27,6 +27,18 @@
 	               $("#zone").append("<div class='section a"+myid+"'>start:<input class='input1'>end:<input class='input2'>duree:<input class='stotal' disabled><\/div>");
 	               update_totalh(); 
 	               $(".a"+myid+ " input").keyup(function(){
+			                            
+                     if($(this).val().length==2)
+                       {
+                         $(this).val($(this).val()+":");
+                       }
+               
+                       if($(this).val().length==5 && $(this).attr('class')=="input1" )
+                       {
+             $(this).next('.input2').focus();
+                       }
+			       
+			       
                        update_stotal(); 
                     });
                    
