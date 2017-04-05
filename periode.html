@@ -40,7 +40,19 @@
       		                $(this).next('.input2').focus();
       		            }
 
-
+      		            if ($(this).val().length == 5 && $(this).attr('class') == "input2") {
+      		               
+                          
+                          if($(this).parent().next().length > 0) {
+                          $(this).parent().next().find('.input1').focus() ;
+                            console.log("Exists");
+                          }
+                  
+                          
+                          
+                          
+                          
+      		            }
       		            update_stotal();
       		        });
 
