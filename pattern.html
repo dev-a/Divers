@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Pattern</title>
+  <style type="text/css">
+
+  </style>
+  <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+
+  <script>
+    function tsv_to_array()
+    {
+       var i= 0;
+     myarray= $('#source').val().trim().split("\n");
+    //console.log(myarray);
+      while(i< myarray.length)
+        {
+          myarray[i]= myarray[i].trim().split("\t");
+          i++;
+        }
+    }
+    function replace_var()
+    {
+     tsv_to_array();
+     var tmp= $('#modele').val();
+     var res="";
+     var i=1;
+     var j=0;
+     while(i< myarray.length)
+     {
+       tampon=tmp;
+       while(j< myarray[0].length)
+       {
+         tampon=tampon.replace( new RegExp('\{'+myarray[0][j]+'\}', 'g') , myarray[i][j]);
+         j++;
+       }
+       j=0;
+       i++;
+       res+=tampon+"\n\n";
+     }
+    return res;
+    }
+
+  function resultat()
+    {
+      $('#result').val(replace_var());
+    }
+
+
+    $( document ).ready(function() {
+        replace_var();
+    });
+  </script>
+</head>
+<body>
+
+  <p>tsv</p>
+  <textarea id='source' rows="4" cols="60" >
+    entete1	entete2	entete3
+    value1	value2	value3
+    value4	value5	value6
+</textarea>
+
+  <p>model</p>
+  <textarea id="modele" rows="4" cols="60">
+ceci est un exemple avec les variables {entete1} {entete2}
+{entete3} {entete1}
+</textarea>
+  <p>result</p>
+  <textarea  id="result" rows="8" cols="60">
+  </textarea>
+
+  <br>
+  <input type='button' value='Go!'  onclick="resultat()">
+</body>
+</html>
