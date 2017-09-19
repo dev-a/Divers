@@ -33,7 +33,14 @@
        tampon=tmp;
        while(j< myarray[0].length)
        {
-         tampon=tampon.replace( new RegExp('\{'+myarray[0][j]+'\}', 'g') , myarray[i][j]);
+         value_replace= myarray[i][j];
+         if(value_replace=="undefined")
+         {
+          value_replace= "";
+         }
+         
+         
+         tampon=tampon.replace( new RegExp('\{'+myarray[0][j]+'\}', 'g') ,value_replace);
          j++;
        }
        j=0;
