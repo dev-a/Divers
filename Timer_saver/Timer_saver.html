@@ -7,7 +7,7 @@
   <title>JS Bin</title>
 
 
-<style id="jsbin-css">
+<style>
     body {
   background: #20262E;
   padding: 20px;
@@ -53,20 +53,8 @@ button {
 }
 
 </style>
-</head>
-<body>
-<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
-
-  <div id="banner-message">
-  <p>Hello World</p>
-  <button value="a">00:01:00</button>
-  <button value="c">00:01:30</button>
-  <button value="b">00:01:40</button>
-</div>
-<div id="result">
-</div>
-
-<script id="jsbin-javascript">
+  <script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script>
    // find elements
 var banner = $("#banner-message")
 var button = $("button")
@@ -130,5 +118,18 @@ function update_data() {
 }
 
 </script>
+</head>
+<body>
+
+  <div id="banner-message">
+  <p>Hello World</p>
+  <button value="a">00:01:00</button>
+  <button value="c">00:01:30</button>
+  <button value="b">00:01:40</button>
+</div>
+<div id="result">
+</div>
+
+
 </body>
 </html>
