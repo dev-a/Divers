@@ -61,6 +61,7 @@ var button = $("button");
 $("#result").append("<p>" + localStorage.getItem('monChat') + "</p>");
 
 $( document ).ready(function() {
+  alert('debug');
 $('button').on("click", function() {
   localStorage.setItem('monChat', $(this).text());
   $("#result").append("<p>" + $(this).text() + "</p>");
