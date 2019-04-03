@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    body {
+  background: #20262E;
+  padding: 20px;
+  font-family: Helvetica;
+}
+
+#banner-message,
+#result {
+  background: #fff;
+  border-radius: 4px;
+  padding: 20px;
+  font-size: 25px;
+  text-align: center;
+  transition: all 0.2s;
+  margin: 0 auto;
+  width: 300px;
+  margin-bottom: 10px;
+}
+
+button {
+  background: #0084ff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 14px;
+  font-size: 15px;
+  color: #fff;
+}
+
+#banner-message.alt {
+  background: #0084ff;
+  color: #fff;
+  margin-top: 40px;
+  width: 200px;
+}
+
+#banner-message.alt button {
+  background: #fff;
+  color: #000;
+}
+
+#result p {
+  font-size: 12px;
+}
+
+    <style>
+
+</head>
+<body>
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+    <script language="JavaScript">
+    // find elements
+var banner = $("#banner-message")
+var button = $("button")
+console.clear();
+$("#result").append("<p>" + localStorage.getItem('monChat') + "</p>");
+
+// handle click and add class
+button.on("click", function() {
+  localStorage.setItem('monChat', $(this).text());
+  $("#result").append("<p>" + $(this).text() + "</p>");
+  // add_data("hello");
+  add_data($(this).text());
+})
+
+
+function add_data(add_this) {
+  var data = localStorage.getItem('data');
+  if (data == null) {
+    var data_tab = {};
+    data_tab[get_today()] = {};
+    data_tab[get_today()][Object.keys(data_tab[get_today()]).length] = add_this;
+    localStorage.setItem('data', JSON.stringify(data_tab));
+  } else {
+    var data_tab = JSON.parse(data);
+    console.log("ici");
+    if (data_tab[get_today()] != null) {
+
+      console.log("i");
+      data_tab[get_today()][Object.keys(data_tab[get_today()]).length] = add_this;
+    } else {
+      console.log("ic");
+      data_tab[get_today()] = {};
+      data_tab[get_today()][Object.keys(data_tab[get_today()]).length] = add_this;
+    }
+
+  }
+  localStorage.setItem('data', JSON.stringify(data_tab));
+
+  //  alert(JSON.stringify(obj));
+  //  alert(JSON.stringify(data));
+  update_data();
+}
+
+function get_today() {
+  return "today";
+}
+
+
+function update_data() {
+  var data = localStorage.getItem('data');
+  var data_tab = JSON.parse(data);
+  var content = "";
+  for (var i in data_tab) {
+    for (var j in data_tab[i]) {
+      content += "<p>" + i + "->" + data_tab[i][j] + "</p>";
+    }
+    content += "<hr>";
+  }
+
+  $("#result").html(content);
+}
+
+    <script>
+  <div id="banner-message">
+  <p>Hello World</p>
+  <button value="a">00:01:00</button>
+  <button value="c">00:01:30</button>
+  <button value="b">00:01:40</button>
+</div>
+<div id="result">
+</div>
+
+</body>
+</html>
