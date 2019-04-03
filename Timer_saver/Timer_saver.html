@@ -61,13 +61,16 @@ var button = $("button")
 
 $("#result").append("<p>" + localStorage.getItem('monChat') + "</p>");
 
-// handle click and add class
-button.on("click", function() {
+$( document ).ready(function() {
+$('button').on("click", function() {
   localStorage.setItem('monChat', $(this).text());
   $("#result").append("<p>" + $(this).text() + "</p>");
   // add_data("hello");
+  console.log('la');
   add_data($(this).text());
-})
+});
+
+});
 
 
 function add_data(add_this) {
