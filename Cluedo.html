@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiche d'enquête Cluedo</title>
+    <style>
+        :root {
+            --primary-color: #1a4b8c;
+            --secondary-color: #f0f8ff;
+            --border-color: #2c5aa0;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--secondary-color);
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cluedo-sheet {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 200px repeat(5, 1fr);
+            gap: 2px;
+        }
+
+        .cell {
+            border: 1px solid var(--border-color);
+            padding: 8px;
+            text-align: left;
+            background-color: white;
+        }
+
+        .header {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .item-cell {
+            cursor: pointer;
+            text-align: center;
+            user-select: none;
+        }
+
+        .item-cell:hover {
+            background-color: #f0f0f0;
+        }
+
+        .item-name {
+            background-color: var(--secondary-color);
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="cluedo-sheet">
+        <div class="section">
+            <div class="section-title">JOUEURS - QUI ?</div>
+            <div class="grid" id="suspects">
+                <div class="cell header">Suspect</div>
+                <div class="cell header">1</div>
+                <div class="cell header">2</div>
+                <div class="cell header">3</div>
+                <div class="cell header">4</div>
+                <div class="cell header">5</div>
+                <div class="cell item-name">Olive</div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-name">Moutarde</div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-name">Orchidée</div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-name">Pervenche</div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-name">Violet</div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-name">Rose</div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">AVEC QUOI ?</div>
+            <div class="grid" id="weapons">
+                <div class="cell header">Arme</div>
+                <div class="cell header">1</div>
+                <div class="cell header">2</div>
+                <div class="cell header">3</div>
+                <div class="cell header">4</div>
+                <div class="cell header">5</div>
+                <div class="cell item-name">Chandelier</div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-name">Poignard</div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-name">Barre de fer</div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-name">Révolver</div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-name">Corde</div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-name">Clé anglaise</div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">OÙ ?</div>
+            <div class="grid" id="rooms">
+                <div class="cell header">Lieu</div>
+                <div class="cell header">1</div>
+                <div class="cell header">2</div>
+                <div class="cell header">3</div>
+                <div class="cell header">4</div>
+                <div class="cell header">5</div>
+                <div class="cell item-name">Salle de réception</div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-name">Salle de billard</div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-name">Jardin d'hiver</div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-name">Salle à manger</div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-name">Entrée</div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-name">Cuisine</div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-name">Bibliothèque</div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-name">Salon</div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-name">Bureau</div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+                <div class="cell item-cell"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.querySelectorAll('.item-cell').forEach(cell => {
+            cell.addEventListener('click', () => {
+                const currentValue = cell.textContent;
+                if (!currentValue) {
+                    cell.textContent = 'X';
+                } else if (currentValue === 'X') {
+                    cell.textContent = '?';
+                } else {
+                    cell.textContent = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
