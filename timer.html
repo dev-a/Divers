@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Horloge & Calculateur de Temps</title>
+    <style>
+        :root {
+            --primary: #00d4ff;
+            --bg: #121212;
+            --card: #1e1e1e;
+            --text: #ffffff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: var(--card);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            text-align: center;
+            width: 320px;
+        }
+
+        h2 { font-weight: 300; margin-bottom: 0.5rem; color: #aaa; }
+
+        .current-time {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .picker-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: #2a2a2a;
+            padding: 1rem;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .unit-control {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .label { font-size: 0.8rem; text-transform: uppercase; color: #888; margin-top: 5px; }
+
+        .btn {
+            background: #333;
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background 0.2s;
+        }
+
+        .btn:hover { background: var(--primary); }
+
+        .value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 10px 0;
+            min-width: 40px;
+        }
+
+        .result-label {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        #result-time {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #00ff88;
+            margin-top: 0.5rem;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Heure Actuelle</h2>
+    <div id="live-clock" class="current-time">00:00:00</div>
+
+    <hr style="border: 0; border-top: 1px solid #333; margin: 20px 0;">
+
+    <div class="picker-container">
+        <div class="unit-control">
+            <button class="btn" onclick="updateOffset('h', 1)">+</button>
+            <div id="offset-h" class="value">0</div>
+            <button class="btn" onclick="updateOffset('h', -1)">-</button>
+            <div class="label">Heures</div>
+        </div>
+
+        <div style="font-size: 2rem; padding-bottom: 20px;">:</div>
+
+        <div class="unit-control">
+            <button class="btn" onclick="updateOffset('m', 1)">+</button>
+            <div id="offset-m" class="value">0</div>
+            <button class="btn" onclick="updateOffset('m', -1)">-</button>
+            <div class="label">Min</div>
+        </div>
+    </div>
+
+    <h2>Heure avec ajout :</h2>
+    <div id="result-time">00:00:00</div>
+</div>
+
+<script>
+    let offsetHours = 0;
+    let offsetMinutes = 0;
+
+    function formatNumber(num) {
+        return num.toString().padStart(2, '0');
+    }
+
+    function updateOffset(type, val) {
+        if (type === 'h') {
+            offsetHours += val;
+            document.getElementById('offset-h').innerText = offsetHours;
+        } else {
+            offsetMinutes += val;
+            document.getElementById('offset-m').innerText = offsetMinutes;
+        }
+        updateDisplay();
+    }
+
+    function updateDisplay() {
+        const now = new Date();
+        
+        // Affichage heure réelle
+        const h = formatNumber(now.getHours());
+        const m = formatNumber(now.getMinutes());
+        const s = formatNumber(now.getSeconds());
+        document.getElementById('live-clock').innerText = `${h}:${m}:${s}`;
+
+        // Calcul de l'heure modifiée
+        // On crée une nouvelle instance pour ne pas modifier l'originale
+        const futureDate = new Date(now.getTime());
+        futureDate.setHours(now.getHours() + offsetHours);
+        futureDate.setMinutes(now.getMinutes() + offsetMinutes);
+
+        const fh = formatNumber(futureDate.getHours());
+        const fm = formatNumber(futureDate.getMinutes());
+        const fs = formatNumber(futureDate.getSeconds());
+        
+        document.getElementById('result-time').innerText = `${fh}:${fm}:${fs}`;
+    }
+
+    // Mise à jour toutes les secondes
+    setInterval(updateDisplay, 1000);
+
+    // Initialisation immédiate
+    updateDisplay();
+</script>
+
+</body>
+</html>
