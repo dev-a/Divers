@@ -9,6 +9,7 @@ https://rawcdn.githack.com/dev-a/Divers/adfd786daeddc501167399f7ec853ae81f84b214
 https://rawcdn.githack.com/dev-a/Divers/refs/heads/master/Cluedo.html
 ## Preview de password.html 
 https://rawcdn.githack.com/dev-a/Divers/3e63626816c2a033b546bfa7411f33f263950977/password.html
-
+## Preview de timer.html 
+https://rawcdn.githack.com/dev-a/Divers/3fd5920a18932246e038f4b827f792563d80f6b4/timer.html
 
 via  https://raw.githack.com/
