@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cal - Terminal Calendar</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+    
+    body {
+      font-family: 'JetBrains Mono', monospace, Courier;
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen flex items-center justify-center p-4">
+
+  <!-- Conteneur principal flexible pour s'adapter à 1 ou 3 mois -->
+  <div class="bg-slate-800 border border-slate-700 rounded-xl p-6 shadow-2xl max-w-5xl w-full transition-all duration-300">
+    
+    <!-- En-tête avec contrôles de navigation et basculeur 3 mois -->
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-6 border-b border-slate-700 pb-4">
+      
+      <!-- Boutons de navigation -->
+      <div class="flex items-center gap-2">
+        <button id="prevBtn" title="Mois précédent" class="px-3 py-1 bg-slate-700 hover:bg-slate-600 rounded text-slate-200 text-sm font-bold transition-colors cursor-pointer">&lt;</button>
+        <button id="nextBtn" title="Mois suivant" class="px-3 py-1 bg-slate-700 hover:bg-slate-600 rounded text-slate-200 text-sm font-bold transition-colors cursor-pointer">&gt;</button>
+        <button id="todayBtn" class="ml-2 px-3 py-1 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded transition-colors cursor-pointer">
+          Aujourd'hui
+        </button>
+      </div>
+
+      <!-- Titre principal Terminal -->
+      <span class="text-xs text-slate-400 font-mono hidden sm:inline">
+        command: <code id="commandLabel" class="text-emerald-400">cal</code>
+      </span>
+
+      <!-- Commutateur 1 Mois / 3 Mois (cal -3) -->
+      <label class="inline-flex items-center cursor-pointer text-xs font-bold text-slate-300 gap-2">
+        <span>Vue 3 mois (<code class="text-emerald-400">-3</code>)</span>
+        <div class="relative">
+          <input type="checkbox" id="threeMonthsToggle" class="sr-only peer">
+          <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-emerald-600"></div>
+        </div>
+      </label>
+    </div>
+
+    <!-- Grille dynamique des mois -->
+    <div id="monthsContainer" class="grid grid-cols-1 md:grid-cols-1 gap-6 transition-all duration-300">
+      <!-- Les mois seront générés dynamiquement ici -->
+    </div>
+
+  </div>
+
+  <script>
+    let currentDate = new Date();
+    const today = new Date();
+    let isThreeMonthsMode = false;
+
+    const monthsContainer = document.getElementById('monthsContainer');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const todayBtn = document.getElementById('todayBtn');
+    const threeMonthsToggle = document.getElementById('threeMonthsToggle');
+    const commandLabel = document.getElementById('commandLabel');
+
+    const monthNames = [
+      "Janvier", "Février", "Mars", "Avril", "Mai", "Juin", 
+      "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+    ];
+
+    function createMonthHTML(year, month) {
+      const firstDay = new Date(year, month, 1).getDay();
+      const startingDay = (firstDay === 0) ? 6 : firstDay - 1; // Ajuster pour semaine Lundi -> Dimanche
+      const totalDays = new Date(year, month + 1, 0).getDate();
+
+      let daysHTML = '';
+
+      // Espaces vides au début
+      for (let i = 0; i < startingDay; i++) {
+        daysHTML += `<div class="p-2"></div>`;
+      }
+
+      // Jours du mois
+      for (let day = 1; day <= totalDays; day++) {
+        const isToday = day === today.getDate() && 
+                        month === today.getMonth() && 
+                        year === today.getFullYear();
+
+        const dayClass = isToday
+          ? "bg-emerald-500 text-slate-900 font-bold shadow-md shadow-emerald-500/30"
+          : "hover:bg-slate-700/50 text-slate-200";
+
+        daysHTML += `
+          <div class="p-2 rounded font-mono text-center text-sm transition-colors flex items-center justify-center ${dayClass}">
+            ${day}
+          </div>
+        `;
+      }
+
+      return `
+        <div class="bg-slate-800/80 border border-slate-700/60 rounded-lg p-4 flex flex-col">
+          <div class="text-center font-bold text-base text-emerald-400 mb-3 tracking-wide border-b border-slate-700/50 pb-2">
+            ${monthNames[month]} ${year}
+          </div>
+          <div class="grid grid-cols-7 gap-1 text-center font-bold text-slate-400 mb-2 text-xs border-b border-slate-700/50 pb-1">
+            <div>Lu</div><div>Ma</div><div>Me</div><div>Je</div><div>Ve</div><div>Sa</div><div>Di</div>
+          </div>
+          <div class="grid grid-cols-7 gap-1 flex-grow">
+            ${daysHTML}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderCalendar() {
+      monthsContainer.innerHTML = '';
+
+      if (isThreeMonthsMode) {
+        // En mode 3 mois (cal -3), adapter la grille sur 3 colonnes sur PC
+        monthsContainer.className = "grid grid-cols-1 md:grid-cols-3 gap-6";
+        commandLabel.textContent = "cal -3";
+
+        // Générer mois précédent, actuel et suivant
+        for (let offset = -1; offset <= 1; offset++) {
+          const targetDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + offset, 1);
+          const year = targetDate.getFullYear();
+          const month = targetDate.getMonth();
+          monthsContainer.innerHTML += createMonthHTML(year, month);
+        }
+      } else {
+        // En mode 1 mois
+        monthsContainer.className = "grid grid-cols-1 max-w-sm mx-auto w-full";
+        commandLabel.textContent = "cal";
+
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth();
+        monthsContainer.innerHTML = createMonthHTML(year, month);
+      }
+    }
+
+    prevBtn.addEventListener('click', () => {
+      currentDate.setMonth(currentDate.getMonth() - 1);
+      renderCalendar();
+    });
+
+    nextBtn.addEventListener('click', () => {
+      currentDate.setMonth(currentDate.getMonth() + 1);
+      renderCalendar();
+    });
+
+    todayBtn.addEventListener('click', () => {
+      currentDate = new Date();
+      renderCalendar();
+    });
+
+    threeMonthsToggle.addEventListener('change', (e) => {
+      isThreeMonthsMode = e.target.checked;
+      renderCalendar();
+    });
+
+    // Rendu initial
+    renderCalendar();
+  </script>
+</body>
+</html>
