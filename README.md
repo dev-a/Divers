@@ -12,6 +12,7 @@ https://rawcdn.githack.com/dev-a/Divers/3e63626816c2a033b546bfa7411f33f263950977
 ## Preview de timer.html 
 https://rawcdn.githack.com/dev-a/Divers/3fd5920a18932246e038f4b827f792563d80f6b4/timer.html
 ## Preview de Calendar.html 
-https://html-preview.github.io/?https://raw.githubusercontent.com/dev-a/Divers/refs/heads/master/Calendar.html
+https://rawcdn.githack.com/dev-a/Divers/refs/heads/master/Calendar.html
 
 via  https://raw.githack.com/
+https://html-preview.github.io/
